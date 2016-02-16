@@ -4,9 +4,28 @@ var Contacts = [];
 var Groups = [];
 var TotalLength = 0;
 var CurrentGroup = 0;
-var FirstGroupID = 0;
-var ResultArray = new Array(1,1); // id For Action , Type Group(1) Or Contact(2)
-var menu = ["1.Add New Group","2.Add New Contact","3.Change Current Group","4.Print Curent Group","5.Print All","6.Find","7.Delete Item","8.Exit", "9.load file" , "10.Write To File"];
+var TreeIndicator = "-";
+var menu = [
+    "1.Add New Contact",
+    "2.Add New Group",
+    "3.Change Current Group",
+    "4.Print Curent Group",
+    "5.Print All",
+    "6.Find",
+    "7.Delete Item",
+    "8.Exit"
+    ];
+var GROUPS_FILENAME = "PhoneBookGroups.txt";
+var CONTACTS_FILENAME = "PhoneBookContact.txt";
+
+var Menu_Item_AddNewGroup = 1;
+var Menu_Item_AddNewContact = 2;
+var Menu_Item_ChangeCurentGroup = 3;
+var Menu_Item_PrintCurentGroup = 4;
+var Menu_Item_PrintAll = 5;
+var Menu_Item_Find = 6;
+var Menu_Item_DeleteItem = 7;
+var Menu_Item_Exit = 8;
 
 // ****** Objects
 function GroupObj(){
@@ -26,6 +45,14 @@ function IncreassId(){
     TotalLength++;
 }
 
+function replaceAll(strString,charToFind,charToreplace) {
+    var retVal = "";
+    for(var i=0;i<strString.length;i++) {
+        retVal = retVal + " ";
+    }
+    return retVal;
+}
+
 function addNewGroup(GroupId,GroupName,ParentID){
     var obj = new GroupObj();
     obj.GroupName = GroupName;
@@ -34,7 +61,6 @@ function addNewGroup(GroupId,GroupName,ParentID){
     Groups.push(obj);
     CurrentGroup = GroupId;
 }
-
 
 function addNewContact(FirstName, LastName, PhoneNumbers,ContactId , GroupId){
     var obj = new PersonObj();
@@ -45,7 +71,6 @@ function addNewContact(FirstName, LastName, PhoneNumbers,ContactId , GroupId){
     obj.PhoneNumbers = PhoneNumbers;
     Contacts.push(obj);
 }
-
 
 function GetGroupIdByName(GroupName) {
     var i = 0;
@@ -60,7 +85,6 @@ function GetGroupIdByName(GroupName) {
     return retVal;
 }
 
-
 function GetGroupIndex(GroupId) {
     var i = 0;
     var retVal = -1;
@@ -73,28 +97,33 @@ function GetGroupIndex(GroupId) {
     return retVal;
 }
 
+
 function ChangeGroup(GroupId) {
-    if(typeof GroupId === 'string') {
-        if(GroupId == "..") {
+    var ResGroupId = -1;
+    if( parseInt(GroupId) === NaN) {
+        if(GroupId === "..") {
             CurrentGroup = Groups[GetGroupIndex(CurrentGroup)].ParentId;
         }
         else{
-            ResGroupId = GetGroupIdByName(GroupId.toLowerCase());
-            if(ResGroupId===0) {
-                console.log("No mach Found...");
-            }
-            else {
-                CurrentGroup = ResGroupId;
+            for(var searchIndex=0;searchIndex < Groups.length;searchIndex++){
+                if((Groups[searchIndex].GroupName).toLowerCase()===GroupId.toLowerCase()){
+                    CurrentGroup = Groups[searchIndex].id;
+                    return 1;
+                }
             }
         }
 
     }
     else {
-        CurrentGroup = GroupId;
+        for(var searchIndex=0;searchIndex < Groups.length;searchIndex++){
+            if(Groups[searchIndex].id === +GroupId){
+                ResGroupId = Groups[searchIndex].id;
+            }
+        }
     }
+    CurrentGroup = ResGroupId;
+    return ResGroupId;
 }
-
-
 
 function RemoveGroupContacts(GroupId){
     for(var c=0;c<Contacts.length;c++){
@@ -110,7 +139,6 @@ function RemoveGroup(GroupId,StartIndex){
     DeleteGroupIndex = GetGroupIndex(GroupId);
     tempID = Groups[DeleteGroupIndex].id;
     Groups.splice(DeleteGroupIndex,1);
-    ResultArray.push(GroupId,2);
     for(var i=StartIndex;i<Groups.length;i++) {
         if(Groups[i].ParentId == tempID) {
             RemoveGroupContacts(GroupId);
@@ -125,14 +153,17 @@ function RemoveGroup(GroupId,StartIndex){
 function RemoveContact(ContactId){
 
     var DeleteContactIndex = GetContactIndex(ContactId);
-    Contacts.splice(DeleteContactIndex,1);
+    if(DeleteContactIndex)
+        Contacts.splice(DeleteContactIndex,1);
 }
 
 function DeleteItem(ItemId){
+    var tmpCurrentGroup = 0;
     var delType = 0;
     for(var i=0;i<Groups.length;i++) {
         if( Groups[i].id == ItemId ) {
             delType = 1;
+            tmpCurrentGroup = Groups[i].ParentId;
         }
     }
     if(delType==0) {
@@ -140,6 +171,7 @@ function DeleteItem(ItemId){
     }
     else {
         RemoveGroup(ItemId,0);
+        CurrentGroup = tmpCurrentGroup;
     }
 }
 
@@ -148,6 +180,7 @@ function PrintAllContacts(GroupId){
     var Arr;
     for(var x = 0 ; x < Contacts.length ;x++) {
         if(Contacts[x].GroupId==GroupId){
+            consoleString = consoleString + replaceAll(TreeIndicator,"-"," ");
             consoleString = consoleString +" " + Contacts[x].FirstName;
             consoleString = consoleString + " " + Contacts[x].LastName;
             consoleString = consoleString + " id=" + Contacts[x].id;
@@ -170,7 +203,6 @@ function GetGroup(Groupindex) {
     return "Group Name:"  + Groups[Groupindex].GroupName + ", Id:" + Groups[Groupindex].id + ", Parent: " + Groups[Groupindex].ParentId;
 }
 
-
 function GetContactIndex(ContactId) {
     var i = 0;
     for(i = 0 ; i < Contacts.length ;i++) {
@@ -184,42 +216,34 @@ function PrintAllGroups(currIndex){
     var TempCurrGroup = Groups[currIndex].id;
     var i = 0;
     var printVal = "";
+    TreeIndicator = TreeIndicator + "-";
     for(i = 0 ; i < Groups.length ;i++) {
         if(Groups[i].ParentId == TempCurrGroup ){
+            printVal = printVal+ TreeIndicator;
             printVal = printVal + GetGroup(i) + "\n";
             printVal = printVal + PrintAllContacts(Groups[i].id) + "\n";
             printVal = printVal  + PrintAllGroups(i);
+            TreeIndicator = TreeIndicator.substring(0,TreeIndicator.length - 1);
         }
     }
+    TreeIndicator = TreeIndicator.substring(0,TreeIndicator.length - 1);
     return printVal;
 }
 
-function findItem(StringKey,actionType) {
+function findItem(StringKey) {
     var retVal= false;
     for(var i=0;i<Groups.length;i++) {
-        if(Groups[i].GroupName.toLowerCase() == StringKey){
-            if(actionType==1) {
-                console.log(Groups[i].GroupName);
-                retVal = true;
-            }
-        }
-        if(actionType==0) {
-            if(Groups[i].id==StringKey)
-                retVal = true;
+        if(Groups[i].GroupName.toLowerCase() === StringKey.toLocaleLowerCase()){
+            console.log("Group Found:" + Groups[i].GroupName);
+            retVal = true;
         }
     }
 
-    for(i=0;i<Contacts.length;i++) {
-        if (Contacts[i].FirstName.toLowerCase() == StringKey
-            || Contacts[i].LastName.toLowerCase() == StringKey) {
-            if (actionType == 0) {
-                console.log(Contacts[i].FirstName + " " + Contacts[i].LastName);
-                retVal = true;
-            }
-        }
-        if (actionType == 0) {
-            if (Contacts[i].id == StringKey)
-                retVal = true;
+    for(var i=0;i<Contacts.length;i++) {
+        if (Contacts[i].FirstName.toLowerCase() === StringKey
+            || Contacts[i].LastName.toLowerCase() === StringKey) {
+            console.log("Contact Found: " + Contacts[i].FirstName + " " + Contacts[i].LastName);
+            retVal = true;
         }
     }
     return retVal;
@@ -229,17 +253,14 @@ function ClickAnyKey(){
     rl.question("Click Enter To Continue ");
 }
 
-
-
-function CreateFiles(){
-    fs.writeFileSync('PhoneBookGroups.txt', JSON.stringify(Groups), 'utf8', function(){
-        //..
+function UpdateFiles(){
+    fs.writeFileSync(GROUPS_FILENAME, JSON.stringify(Groups), 'utf8', function(){
+        console.log("Group File Updated!");
     });
-    fs.writeFileSync('PhoneBookContact.txt', JSON.stringify(Contacts), 'utf8', function(){
-        //..
+    fs.writeFileSync(CONTACTS_FILENAME, JSON.stringify(Contacts), 'utf8', function(){
+        console.log("Contact File Updated!");
     });
 }
-
 
 function LoadGroupFile(FileName){
     var ObjectL = [];
@@ -253,8 +274,6 @@ function LoadGroupFile(FileName){
     }
 }
 
-
-
 function LoadContactFile(FileName){
     var ObjectL = [];
     var LocalPhoneNembers =[];
@@ -266,87 +285,77 @@ function LoadContactFile(FileName){
         if(ObjectL[NewContactIndex].id > TotalLength)
             TotalLength = ObjectL[NewContactIndex].id;
         }
-
-
 }
 
-
-
 function TakeAction(ActionId){
-    var fname="",lname="";
-    var numbers = [];
-    var newnumber = "";
-    var yn = false;
-    var gname = "";
-    var findkey = "";
+    var firstName="",lastName="";
+    var numbersArr = [];
+    var newNumber = "";
+    var newGroupName = "";
+    var findKey = "";
+    var changeGroupResult=0;
     switch(ActionId) {
-        case 1:
-            fname = rl.question("Please Enter Contacts First Name: ");
-            lname = rl.question("Please Enter Contacts Last Name: ");
-            newnumber = rl.question("Please Enter Contacts Phone Number: ");
-            numbers.push(newnumber);
-            newnumber = rl.question("Do You Want To Add another number? (Y/N) ");
-            if(newnumber.toLowerCase()=="y") {
-                newnumber = rl.question("Please Enter Contacts Phone Number: ");
-                numbers.push(newnumber);
-                IncreassId();
-                addNewContact(fname,lname,numbers,TotalLength,CurrentGroup);
-                console.log("New Contact Added!");
-                ClickAnyKey();
+        case Menu_Item_AddNewGroup:
+            firstName = rl.question("Please Enter Contacts First Name: ");
+            lastName = rl.question("Please Enter Contacts Last Name: ");
+            newNumber = rl.question("Please Enter Contacts Phone Number: ");
+            numbersArr.push(newNumber);
+            addnewNumber = "Y";
+            while(addnewNumber.toLowerCase()=="y") {
+                addnewNumber = rl.question("Do You Want To Add another number? (Y/N) ");
+                if(addnewNumber.toLowerCase()=="y") {
+                    newNumber = rl.question("Please Enter Contacts Phone Number: ");
+                    numbersArr.push(newNumber);
+                }
+            }
+            IncreassId();
+            addNewContact(firstName,lastName,numbersArr,TotalLength,CurrentGroup);
+            console.log("New Contact Added!");
+            UpdateFiles();
+            ClickAnyKey();
+            break;
+        case Menu_Item_AddNewContact:
+            newGroupName = rl.question("Please Enter Group Name: ");
+            IncreassId();
+            addNewGroup(TotalLength,newGroupName,CurrentGroup);
+            console.log("Group '"+newGroupName+"' Added");
+            UpdateFiles();
+            ClickAnyKey();
+            break;
+        case Menu_Item_ChangeCurentGroup:
+            gid = rl.question("Please Enter Group Id or Group Name or '..' for Parent: ");
+            changeGroupResult = ChangeGroup(gid);
+            if(changeGroupResult) {
+                console.log("Current Group Change To: " + Groups[GetGroupIndex(CurrentGroup)].GroupName);
             }
             else {
-                IncreassId();
-                addNewContact(fname,lname,numbers,TotalLength,CurrentGroup);
-                console.log("New Contact Added!");
-                ClickAnyKey();
+                console.log("Group Was Not Found!");
             }
-            break;
-        case 2:
-            gname = rl.question("Please Enter Group Name: ");
-            IncreassId();
-            addNewGroup(TotalLength,gname,CurrentGroup);
-            console.log("Group '"+gname+"' Added");
             ClickAnyKey();
             break;
-        case 3:
-            gid = rl.question("Please Enter Group Id or Group Name or '..' for Parent: ");
-            ChangeGroup(gid);
-            console.log("Current Group Change To: " + Groups[GetGroupIndex(CurrentGroup)].GroupName);
-            ClickAnyKey();
-            break;
-        case 4:
+        case Menu_Item_PrintCurentGroup:
             console.log(PrintAllGroups(GetGroupIndex(CurrentGroup)));
             ClickAnyKey();
             break;
-        case 5:
+        case Menu_Item_PrintAll:
             console.log( GetGroup(0));
             console.log(PrintAllGroups(0));
             ClickAnyKey();
             break;
-        case 6:
-            findkey = rl.question("Please Enter Contact First name OR Last Name OR Group Name ToSearch: ");
-            if(!findItem(findkey.toLowerCase(),1)) {
+        case Menu_Item_Find:
+            findKey = rl.question("Please Enter Contact First name OR Last Name OR Group Name ToSearch: ");
+            if(!findItem(findKey.toLowerCase())) {
                 console.log("No Mach Found");
             }
             ClickAnyKey();
             break;
-        case 7:
-            findkey = rl.question("Please Enter Item Id To Delete: ");
-            findkey = parseInt(findkey);
-            if(findItem(findkey,0)) {
-                DeleteItem(findkey);
-            }
-            else {
-                console.log("No Much Found");
-            }
+        case Menu_Item_DeleteItem:
+            findKey = rl.question("Please Enter Item Id To Delete: ");
+            DeleteItem(+findKey);
+            UpdateFiles();
             break;
-        case 8:
+        case Menu_Item_Exit:
             process.exit();
-        case 9:
-            break;
-        case 10:
-            CreateFiles();
-            break;
         default:
             console.log("no Such Action ");
             ClickAnyKey();
@@ -356,7 +365,7 @@ function TakeAction(ActionId){
 }
 
 function PrintMenu(){
-    //console.log('\033[2J');
+    console.log('\033[2J');
     for(var i=0;i<menu.length;i++) {
         console.log(menu[i]);
     }
@@ -369,37 +378,13 @@ function PrintMenu(){
     }
 }
 
-function AutoRun(){
-    addContact("PhoneBook-Gal1","matheys",["0502770953","048110082"]);
-    addContact("PhoneBook-Gal2","matheys",["0502770953","048110082"]);
-
-    addGroup("Sub1"); // Create Root Static
-    addContact("Sub1-Gal1","matheys",["0502770953","048110082"]);
-    addContact("Sub1-Gal2","matheys",["0502770953","048110082"]);
-
-    addGroup("Sub2"); // Create Root Static
-    addContact("Sub2-Gal1","matheys",["0502770953","048110082"]);
-    addContact("Sub2-Gal2","matheys",["0502770953","048110082"]);
-
-    addGroup("Sub3"); // Create Root Static
-    addContact("Sub3-Gal1","matheys",["0502770953","048110082"]);
-    addContact("Sub3-Gal2","matheys",["0502770953","048110082"]);
-
-    addGroup("Sub4"); // Create Root Static
-    addContact("Sub4-Gal1","matheys",["0502770953","048110082"]);
-    addContact("Sub4-Gal2","matheys",["0502770953","048110082"]);
-    //PrintMenu();
-    //CreateFiles();
-}
-
 function StartApp(){
     console.log("Loading Group Data Files....\n");
-    LoadGroupFile("PhoneBookGroups.txt");
+    LoadGroupFile(GROUPS_FILENAME);
     console.log("Group Data Files Loaded!\n");
     console.log("Loading Contacts Data Files....\n");
-    LoadContactFile("PhoneBookContact.txt");
+    LoadContactFile(CONTACTS_FILENAME);
     console.log("Contacts Data Files Loaded!\n");
-    PrintAllGroups(0);
     PrintMenu();
 }
 
