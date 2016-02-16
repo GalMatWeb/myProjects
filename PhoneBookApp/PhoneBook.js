@@ -4,7 +4,7 @@ var Contacts = [];
 var Groups = [];
 var TotalLength = 0;
 var CurrentGroup = 0;
-var TreeIndicator = "-";
+var TreeIndicator = "";
 var menu = [
     "1.Add New Contact",
     "2.Add New Group",
@@ -18,34 +18,24 @@ var menu = [
 var GROUPS_FILENAME = "PhoneBookGroups.txt";
 var CONTACTS_FILENAME = "PhoneBookContact.txt";
 
-var Menu_Item_AddNewGroup = 1;
-var Menu_Item_AddNewContact = 2;
-var Menu_Item_ChangeCurentGroup = 3;
-var Menu_Item_PrintCurentGroup = 4;
-var Menu_Item_PrintAll = 5;
-var Menu_Item_Find = 6;
-var Menu_Item_DeleteItem = 7;
-var Menu_Item_Exit = 8;
+var MENU_ITEM_ADDNEWGROUP = 1;
+var MENU_ITEM_ADDNEWCONTACT = 2;
+var MENU_ITEM_CHANGECURENTGROUP = 3;
+var MENU_ITEM_PRINTCURENTGROUP = 4;
+var MENU_ITEM_PRINTALL = 5;
+var MENU_ITEM_FIND = 6;
+var MENU_ITEM_DELETEITEM = 7;
+var MENU_ITEM_EXIT = 8;
 
-// ****** Objects
-function GroupObj(){
-    this.id=0;
-    this.GroupName = "Phone Book";
-    this.ParentId = 0;
-}
-function PersonObj(){
-    this.id = 0;
-    this.FirstName = "";
-    this.LastName = "";
-    this.PhoneNumbers = [];
-    this.GroupId = 0;
-}
+var PRINTALL = "ALL";
+var PRINTKIDS = "KIDS";
+
 
 function IncreassId(){
     TotalLength++;
 }
 
-function replaceAll(strString,charToFind,charToreplace) {
+function CreateSPaceString(strString) {
     var retVal = "";
     for(var i=0;i<strString.length;i++) {
         retVal = retVal + " ";
@@ -54,22 +44,24 @@ function replaceAll(strString,charToFind,charToreplace) {
 }
 
 function addNewGroup(GroupId,GroupName,ParentID){
-    var obj = new GroupObj();
-    obj.GroupName = GroupName;
-    obj.ParentId = ParentID;
-    obj.id = GroupId;
-    Groups.push(obj);
+    var Obj = {
+        GroupName: ParentID,
+        ParentId: ParentID,
+        id: GroupId
+    };
+    Groups.push(Obj);
     CurrentGroup = GroupId;
 }
 
 function addNewContact(FirstName, LastName, PhoneNumbers,ContactId , GroupId){
-    var obj = new PersonObj();
-    obj.FirstName = FirstName;
-    obj.LastName = LastName;
-    obj.id = ContactId;
-    obj.GroupId = GroupId;
-    obj.PhoneNumbers = PhoneNumbers;
-    Contacts.push(obj);
+    var Obj = {
+        FirstName: FirstName,
+        LastName: LastName,
+        ContactId: ContactId,
+        GroupId: GroupId,
+        PhoneNumbers: PhoneNumbers
+    };
+    Contacts.push(Obj);
 }
 
 function GetGroupIdByName(GroupName) {
@@ -180,7 +172,7 @@ function PrintAllContacts(GroupId){
     var Arr;
     for(var x = 0 ; x < Contacts.length ;x++) {
         if(Contacts[x].GroupId==GroupId){
-            consoleString = consoleString + replaceAll(TreeIndicator,"-"," ");
+            consoleString = consoleString + CreateSPaceString(TreeIndicator);
             consoleString = consoleString +" " + Contacts[x].FirstName;
             consoleString = consoleString + " " + Contacts[x].LastName;
             consoleString = consoleString + " id=" + Contacts[x].id;
@@ -212,21 +204,30 @@ function GetContactIndex(ContactId) {
     return i;
 }
 
-function PrintAllGroups(currIndex){
+function PrintAllGroups(currIndex,printType){
     var TempCurrGroup = Groups[currIndex].id;
     var i = 0;
     var printVal = "";
-    TreeIndicator = TreeIndicator + "-";
+    if(printType === PRINTALL) {
+        TreeIndicator = TreeIndicator + "-";
+    }
+    else {
+        TreeIndicator =  "-";
+    }
+
     for(i = 0 ; i < Groups.length ;i++) {
         if(Groups[i].ParentId == TempCurrGroup ){
-            printVal = printVal+ TreeIndicator;
+            printVal = printVal + TreeIndicator;
             printVal = printVal + GetGroup(i) + "\n";
             printVal = printVal + PrintAllContacts(Groups[i].id) + "\n";
-            printVal = printVal  + PrintAllGroups(i);
-            TreeIndicator = TreeIndicator.substring(0,TreeIndicator.length - 1);
+            if(printType===PRINTALL) {
+                printVal = printVal  + PrintAllGroups(i,printType);
+                TreeIndicator = TreeIndicator.substring(0,TreeIndicator.length - 1);
+            }
+
         }
     }
-    TreeIndicator = TreeIndicator.substring(0,TreeIndicator.length - 1);
+
     return printVal;
 }
 
@@ -287,7 +288,7 @@ function LoadContactFile(FileName){
         }
 }
 
-function TakeAction(ActionId){
+function ProccessMenuCommand(ActionId){
     var firstName="",lastName="";
     var numbersArr = [];
     var newNumber = "";
@@ -295,7 +296,7 @@ function TakeAction(ActionId){
     var findKey = "";
     var changeGroupResult=0;
     switch(ActionId) {
-        case Menu_Item_AddNewGroup:
+        case MENU_ITEM_ADDNEWGROUP:
             firstName = rl.question("Please Enter Contacts First Name: ");
             lastName = rl.question("Please Enter Contacts Last Name: ");
             newNumber = rl.question("Please Enter Contacts Phone Number: ");
@@ -314,7 +315,7 @@ function TakeAction(ActionId){
             UpdateFiles();
             ClickAnyKey();
             break;
-        case Menu_Item_AddNewContact:
+        case MENU_ITEM_ADDNEWCONTACT:
             newGroupName = rl.question("Please Enter Group Name: ");
             IncreassId();
             addNewGroup(TotalLength,newGroupName,CurrentGroup);
@@ -322,7 +323,7 @@ function TakeAction(ActionId){
             UpdateFiles();
             ClickAnyKey();
             break;
-        case Menu_Item_ChangeCurentGroup:
+        case MENU_ITEM_CHANGECURENTGROUP:
             gid = rl.question("Please Enter Group Id or Group Name or '..' for Parent: ");
             changeGroupResult = ChangeGroup(gid);
             if(changeGroupResult) {
@@ -333,28 +334,28 @@ function TakeAction(ActionId){
             }
             ClickAnyKey();
             break;
-        case Menu_Item_PrintCurentGroup:
-            console.log(PrintAllGroups(GetGroupIndex(CurrentGroup)));
+        case MENU_ITEM_PRINTCURENTGROUP:
+            console.log(PrintAllGroups(GetGroupIndex(CurrentGroup),PRINTKIDS));
             ClickAnyKey();
             break;
-        case Menu_Item_PrintAll:
+        case MENU_ITEM_PRINTALL:
             console.log( GetGroup(0));
-            console.log(PrintAllGroups(0));
+            console.log(PrintAllGroups(0,PRINTALL));
             ClickAnyKey();
             break;
-        case Menu_Item_Find:
+        case MENU_ITEM_FIND:
             findKey = rl.question("Please Enter Contact First name OR Last Name OR Group Name ToSearch: ");
             if(!findItem(findKey.toLowerCase())) {
                 console.log("No Mach Found");
             }
             ClickAnyKey();
             break;
-        case Menu_Item_DeleteItem:
+        case MENU_ITEM_DELETEITEM:
             findKey = rl.question("Please Enter Item Id To Delete: ");
             DeleteItem(+findKey);
             UpdateFiles();
             break;
-        case Menu_Item_Exit:
+        case MENU_ITEM_EXIT:
             process.exit();
         default:
             console.log("no Such Action ");
@@ -374,7 +375,7 @@ function PrintMenu(){
         PrintMenu();
     }
     else {
-        TakeAction(Number(action));
+        ProccessMenuCommand(Number(action));
     }
 }
 
