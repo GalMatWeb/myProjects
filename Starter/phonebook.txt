@@ -1,0 +1,28 @@
+[
+{
+    "type": "contact",
+    "id": 1,
+    "firstname": "Gal",
+    "lastname": "Matheys",
+    "phonenumbers":["0502770953" , "0502770953"]
+},
+{
+    "type": "group",
+    "id": 2,
+    "name": "group1",
+    "numchilds": 1
+} ,
+{
+    "type": "group",
+    "id": 3,
+    "name": "group2",
+    "numchilds": 1
+},
+ {
+     "type": "contact",
+     "id": 4,
+     "firstname": "sdf",
+     "lastname": "dsaxdsa",
+     "phonenumbers":["0502770953" , "0502770953"]
+ }
+]
