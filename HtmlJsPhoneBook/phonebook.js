@@ -65,19 +65,19 @@ phoneBook.init = (function(){
         newElem = document.createElement("input");
         newElem.id = FIRST_NAME_INPUT_ID;
         newElem.setAttribute("type","text");
-        newElem.value = "First Name";
+        newElem.setAttribute("placeholder","First Name");
         newForm.appendChild(newElem);
 
         newElem = document.createElement("input");
         newElem.id = LAST_NAME_INPUT_ID;
         newElem.setAttribute("type","text");
-        newElem.value = "Last Name";
+        newElem.setAttribute("placeholder","Last Name");
         newForm.appendChild(newElem);
 
         newElem = document.createElement("input");
         newElem.id = PHONE_NUMBERS_INPUT_ID;
         newElem.setAttribute("type","text");
-        newElem.value = "Phone Number";
+        newElem.setAttribute("placeholder","Phone Number");
         newElem.className = "phones";
         newElem.onblur = function(){
             var ans=window.confirm("Do You Want To Add Another Number?");
