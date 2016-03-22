@@ -129,8 +129,11 @@ function WritePhoneBookToFile() {
 
 function LoadPhoneBookFromFile() {
     var newData = fs.readFileSync("phonebook.txt",'utf-8');
-    newData = JSON.parse(newData);
-    reBuildData(newData);
+    if(newData) {
+        newData = JSON.parse(newData);
+        reBuildData(newData);
+    }
+
 }
 
 
