@@ -35,29 +35,55 @@ function printMenu() {
     }
 }
 
-
-function reBuildData(newData) {
+/* set data for saving and set saved data to objects */
+function reBuildChilds(newData , index ,numchilds) {
     var newitem = {};
-    for(var i=0 ; i<newData.length ; i++) {
-        if(newData[i].type == "group") {
-            newitem = createGroup(newData[i].name , newData[i].id);
+    for(var x=index+1 ; x < numchilds ; x++ ) {
+        if(newData[x].type == "group") {
+            newitem = phoneBook.phoneBookManager.createGroup(
+                newData[x].name ,
+                newData[x].id);
+            phoneBook.phoneBookManager.addItem(newitem);
+            x = reBuildChilds(newData , x , newData[x].numchilds);
+            currentGroup = newitem;
         }
         else {
-            newitem = createContact(newData[i].firstname , newData[i].lastname , newData[i].phonenumbers ,newData[i].id );
-        }
-        addItem(newitem);
-        for(var x=i ; x < newData[i].numchilds ; x++ ) {
-            if(newData[x].type == "group") {
-                newitem = createGroup(newData[x].name , newData[i].id);
-            }
-            else {
-                newitem = createContact(newData[x].firstname , newData[x].lastname , newData[x].phonenumbers ,newData[x].id );
-            }
-            addItem(newitem);
-            i++;
+            newitem = phoneBook.phoneBookManager.createContact(
+                newData[x].firstname ,
+                newData[x].lastname ,
+                newData[x].phonenumbers ,
+                newData[x].id );
+            phoneBook.phoneBookManager.addItem(newitem);
         }
     }
+    return x-1;
 }
+
+
+function reBuildData(newDataArr) {
+    var newitem = {};
+    var nextId = -1;
+    for(var x=0 ; x< newDataArr.length ; x++) {
+        if(newDataArr[x].type == "group") {
+            newitem = createGroup(
+                newDataArr[x].name ,
+                newDataArr[x].id );
+            addItem(newitem);
+            x = reBuildChilds(newDataArr , x , newDataArr[x].numchilds);
+            currentGroup = newitem;
+        }
+        else {
+            newitem = createContact(
+                newDataArr[x].firstname ,
+                newDataArr[x].lastname ,
+                newDataArr[x].phonenumbers ,
+                newDataArr[x].id );
+            addItem(newitem);
+        }
+
+    }
+}
+
 
 
 function CreateFlatArray(StartPoint ,flatArray) {
@@ -87,6 +113,7 @@ function CreateFlatArray(StartPoint ,flatArray) {
     }
 
 }
+/* set data for saving and set saved data to objects */
 
 function WritePhoneBookToFile() {
     var flatArray = [];
@@ -189,7 +216,8 @@ function changeCurrentGroup(){
             currentGroup = sunGroup;
             console.log("Group with name " + name + " was found currentGroup is " + name);
         }
-    }}
+    }
+}
 
 function print(items) {
         for(var i=0 ; i<items.length ; i++) {
@@ -287,7 +315,7 @@ function deleteItem(){
 function removeParent(StartPoint){
     for(var i=0 ; i<StartPoint.items.length ; i++) {
         StartPoint.items[i].parent = {};
-        if(StartPoint.items[i].items != undefined) {
+        if(StartPoint.items[i].items) {
             removeParent(StartPoint.items[i]);
         }
     }
