@@ -1,10 +1,14 @@
+/* Link To Git:
+    https://github.com/GalMatWeb/myProjects/tree/master/PhoneBookApp
+ */
+
 var rl = require("readline-sync");
 var fs = require('fs');
 var Contacts = [];
 var Groups = [];
 var TotalLength = 0;
 var CurrentGroup = 0;
-var TreeIndicator = "";
+var TreeDisplay = "";
 var menu = [
     "1.Add New Contact",
     "2.Add New Group",
@@ -172,7 +176,7 @@ function PrintAllContacts(GroupId){
     var Arr;
     for(var x = 0 ; x < Contacts.length ;x++) {
         if(Contacts[x].GroupId==GroupId){
-            consoleString = consoleString + CreateSPaceString(TreeIndicator);
+            consoleString = consoleString + CreateSPaceString(TreeDisplay);
             consoleString = consoleString +" " + Contacts[x].FirstName;
             consoleString = consoleString + " " + Contacts[x].LastName;
             consoleString = consoleString + " id=" + Contacts[x].id;
@@ -209,20 +213,20 @@ function PrintAllGroups(currIndex,printType){
     var i = 0;
     var printVal = "";
     if(printType === PRINTALL) {
-        TreeIndicator = TreeIndicator + "-";
+        TreeDisplay = TreeDisplay + "-";
     }
     else {
-        TreeIndicator =  "-";
+        TreeDisplay =  "-";
     }
 
     for(i = 0 ; i < Groups.length ;i++) {
         if(Groups[i].ParentId == TempCurrGroup ){
-            printVal = printVal + TreeIndicator;
+            printVal = printVal + TreeDisplay;
             printVal = printVal + GetGroup(i) + "\n";
             printVal = printVal + PrintAllContacts(Groups[i].id) + "\n";
             if(printType===PRINTALL) {
                 printVal = printVal  + PrintAllGroups(i,printType);
-                TreeIndicator = TreeIndicator.substring(0,TreeIndicator.length - 1);
+                TreeDisplay = TreeDisplay.substring(0,TreeDisplay.length - 1);
             }
 
         }
@@ -262,6 +266,8 @@ function UpdateFiles(){
         console.log("Contact File Updated!");
     });
 }
+
+
 
 function LoadGroupFile(FileName){
     var ObjectL = [];

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <link rel="icon" type="image/ico" sizes="32x32" href="favicon.ico">
+    <title>Phone Book App - Gal Matheys</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, initial-scale=1" />
+    <link href="css/pb.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+    <div id="main">
+        <div id="head">
+            <span>PBC</span>
+        </div>
+        <div id="right">
+            <a id="savepb" href="javascript:void(0)" title="Load"><img src="images/save.png" alt="Load"></a>
+            <a id="load" href="javascript:void(0)" title="Save"><img src="images/load.jpg" alt="Save"></a>
+            <h2>Phone Book</h2>
+            <a id="addnewcontact" href="javascript:void(0)">+ Add New Contact</a>
+            <a href="javascript:void(0)" id="addnewgroup">+Add New Group</a>
+            <div class="searchbar" id="searchbar">
+                <input type="text" id="searchbox" placeholder="Search">
+                <div id="searchalert"></div>
+            </div>
+            <div class="back"><img src="images/level2.png" id="back"></div>
+            <ul id="grouplist">
+
+            </ul>
+        </div>
+        <div id="footer">
+            &copy;All Rights Reserved Gal Matheys
+        </div>
+    </div>
+    <div id="blackout"></div>
+    <div id="groupForm">
+        <h3>Group</h3>
+        <input type="text" name="groupname" id="groupname" placeholder="Group Name" value="" />
+        <input type="button" name="savegroup" id="savegroup" value="Save">
+    </div>
+    <div id="contactForm">
+        <h3>Contact</h3>
+        <input type="text" name="firstname" id="firstname" placeholder="First Name" value="" />
+        <input type="text" name="lastname" id="lastname" placeholder="Last Name" value="" />
+        <input type="text" name="phone" id="phone" class="phonenumber" placeholder="Phone Number" value="" />
+        <input type="text" name="cell" id="cell" class="phonenumber" placeholder="Cell Number" value="" />
+        <input type="hidden" name="id" id="id" value=""/>
+        <input type="button" name="savecontact" id="savecontact" value="Save">
+    </div>
+    <script src="js/jq.min.js"></script>
+    <script type="text/javascript" src="modules/events.js"></script>
+    <script type="text/javascript" src="globals.js"></script>
+    <script type="text/javascript" src="dispatcher/appdispatcher.js"></script>
+    <script type="text/javascript" src="Views/Tree.js"></script>
+    <script type="text/javascript" src="Views/UI.js"></script>
+    <script type="text/javascript" src="Class/groups.js"></script>
+    <script type="text/javascript" src="Class/Contacts.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="class/LocalStorage.js"></script>
+    <script type="text/javascript" src="core.js"></script>
+    <script type="text/javascript" src="plugins/phonenumber.js"></script>
+    <script>
+        $(".phonenumber").phonenumbers();
+    </script>
+</body>
+</html>

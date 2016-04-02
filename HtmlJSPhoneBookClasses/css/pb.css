@@ -1,0 +1,401 @@
+@font-face {
+    font-family: 'opensanshebrew-regular';
+    src: url('fonts/opensanshebrew-regular.eot'); /* IE9 Compat Modes */
+    src: url('fonts/opensanshebrew-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('fonts/opensanshebrew-regular.woff') format('woff'), /* Pretty Modern Browsers */
+    url('fonts/opensanshebrew-regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('fonts/opensanshebrew-regular.svg#OpenSans-regular') format('svg'); /* Legacy iOS */
+}
+
+
+
+
+body , html {
+    margin:0px;
+    padding:0px;
+    width:100%;
+    height:100%;
+}
+
+body {
+    width:100%;
+    height: 100%;
+    font-family: 'opensanshebrew-regular' , 'Arial' , 'Tahoma';
+    font-size:15px;
+    color:#464646;
+    direction:ltr;
+    text-align:left;
+}
+
+#main {
+    position: relative;
+    display: block;
+    float: left;
+    width:100%;
+    height: calc(100% - 30px);
+
+}
+
+#head {
+    position: relative;
+    display: block;
+    float: left;
+    width:100%;
+    min-height:100px;
+    background: #5502FF;
+    color:#FFF;
+    font-size:3em;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding:20px;
+}
+
+#head span {
+    font-size:4em;
+}
+
+#back {
+    position: relative;
+    display: none;
+    float: none;
+    clear: both;
+    width:36px;
+    height:41px;
+    cursor: pointer;
+}
+
+.back {
+    position: relative;
+    display: block;
+    float: none;
+    clear: both;
+    width:36px;
+    height:41px;
+    cursor: pointer;
+}
+
+#left {
+    position: relative;
+    display: block;
+    float: left;
+    width:25%;
+    min-height:100px;
+    background: #e7e7e7;
+    color:#464646;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding:20px;
+    height:calc(100% - 100px);
+}
+
+#grouplist {
+    position: relative;
+    display: block;
+    float: left;
+    width:80%;
+    max-width:580px;
+    min-height:30px;
+    padding:0px;
+    margin:0px;
+    list-style-type: none;
+}
+
+
+
+#grouplist li {
+    position: relative;
+    display: none;
+    float: left;
+    width:100%;
+    max-width:600px;
+    min-height:50px;
+    padding:0px;
+    margin:0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left:50px;
+    padding-top:5px;
+    cursor: pointer;
+    background-color: #FFF;
+    border-bottom:1px solid #464646;
+}
+
+.grp {
+    background: url('../images/group.png') top left no-repeat;
+}
+
+.cnt {
+    background: url('../images/contact.png') top left no-repeat;
+}
+
+#grouplist li.nobg {
+    background: none;
+    padding-left:0px;
+}
+
+#addnewgroup li a {
+    position: relative;
+    display: block;
+    float: left;
+    width:100%;
+    min-height:30px;
+    font-size:1.5em;
+    color:#c6c6c6;
+    text-decoration: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#grouplist li a.del {
+    position: absolute;
+    display: block;
+    float: none;
+    width:51px;
+    height:34px;
+    top:5px;
+    right:0px;
+}
+
+
+
+#right {
+    position: relative;
+    display: block;
+    float: left;
+    width:75%;
+    min-height:100px;
+    background: #FFF;
+    color:#464646;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding:20px;
+    height:calc(100% - 130px);
+}
+
+#right h2 {
+    width:100%;
+    clear: both;
+}
+
+.searchbar {
+    position: relative;
+    display: block;
+    float: left;
+    width:100%;
+    height:50px;
+    padding:20px 0px 10px 0px;
+}
+
+#searchalert {
+    position: relative;
+    display: block;
+    float: left;
+    width:100%;
+    height:30px;
+    color:red;
+}
+
+#savepb , #load {
+    position: releative;
+    display:block;
+    float: left;
+    width:25px;
+    height:26px;
+    margin-right:10px;
+}
+
+
+#savepb img , #load img {
+    width:100%;
+    max-width:100%;
+}
+
+
+.searchbar input[type=text] {
+    position: relative;
+    display: block;
+    float: left;
+    width: 50%;
+    height: 34px;
+    border: 1px solid #464646;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 20px;
+}
+
+.searchbar input[type=button] {
+    position: relative;
+    display: block;
+    float: left;
+    width:20%;
+    height:34px;
+    border:1px solid #464646;
+    margin-left:20px;
+}
+
+
+#footer {
+    position: relative;
+    display: block;
+    float: left;
+    width:100%;
+    height:30px;
+    background: #000;
+    color:#FFF;
+    font-size:1em;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding:5px 20px 5px 5px;
+}
+
+#blackout {
+    position: fixed;
+    display: none;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    background: rgba(0,0,0,0.8);
+    z-index:999;
+}
+
+#groupForm {
+    position: fixed;
+    display: none;
+    width:250px;
+    height:150px;
+    background: #FFF;
+    border:2px solid #464646;
+    color:#464646;
+    font-size:1em;
+    padding:10px 20px 10px 20px;
+    left:50%;
+    top:50%;
+    margin-left: -125px;
+    margin-top: -75px;
+    z-index:1001;
+}
+
+#groupForm input {
+    position: relative;
+    display: block;
+    height:30px;
+    background: #e7e7e7;
+    color:#000;
+    border:1px solid #464646;
+    margin-bottom:10px;
+    z-index:1002;
+}
+
+#groupForm input[type=text] {
+    float: left;
+    width:100%;
+}
+
+#groupForm input[type=button] {
+    float: right;
+    width:30%;
+}
+
+#groupForm input.hideinputview {
+    border:0px ;
+    background: #FFF;
+}
+
+
+#contactForm {
+    position: fixed;
+    display: none;
+    width:250px;
+    height:350px;
+    background: #FFF;
+    border:2px solid #464646;
+    color:#464646;
+    font-size:1em;
+    padding:10px 20px 10px 20px;
+    left:50%;
+    top:50%;
+    margin-left: -125px;
+    margin-top: -175px;
+    z-index:1001;
+}
+
+#contactForm input {
+    position: relative;
+    display: block;
+    height:30px;
+    background: #e7e7e7;
+    color:#000;
+    border:1px solid #464646;
+    margin-bottom:10px;
+    z-index:1002;
+}
+
+#contactForm input.hideinputview {
+    border:0px ;
+    background: #FFF;
+}
+
+#contactForm input[type=text] {
+    float: left;
+    width:100%;
+}
+
+#contactForm input[type=button] {
+    float: right;
+    width:30%;
+}
+
+@media screen and (max-width: 640px) {
+
+    #head span {
+        font-size:2em;
+    }
+
+    #right , #left {
+        width:100%;
+        padding:10px;
+    }
+
+    #left {
+        min-height:80px;
+        height:auto;
+    }
+
+
+    #grouplist {
+        min-height:60px;
+        height:auto;
+    }
+
+    #save , #load {
+        position: fixed;
+        top:170px;
+
+    }
+
+    #load {
+
+        left:50px;
+    }
+
+    #showGroupsBtn {
+        display:block;
+    }
+
+
+    #footer {
+        position: fixed;
+        bottom:0px;
+        left:0px;
+        top:auto;
+    }
+
+}
