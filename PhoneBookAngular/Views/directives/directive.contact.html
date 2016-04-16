@@ -1,0 +1,17 @@
+<div ng-controller="addContactCtrl as addContactCtrl" class="{{item.className}}">
+    <label for="firstName">First Name:</label>
+    <input type="text" name="firstName" id="firstName"
+           ng-model="addContactCtrl.firstName" value="">
+    <label for="lastName">Last Name:</label>
+    <input type="text" name="lastName" id="lastName"
+           ng-model="addContactCtrl.lastName"
+           value="">
+    <label >PhoneNumbers:</label>
+    <input type="text" name="PhoneNumber"
+           ng-repeat="i in addContactCtrl.phoneNumbers track by $index"
+           ng-model="addContactCtrl.phoneNumbers[$index]"
+           class="input-number" value="">
+    <A href="javascript:void(0)" class="addnumber" ng-click="addContactCtrl.addnumber()"><img src="images/anew.png"></A>
+    <input type="button" name="saveContact" id="saveContact"
+           ng-click="addContactCtrl.saveContact()" value="Add Contact">
+</div>

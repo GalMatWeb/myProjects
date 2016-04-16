@@ -1,0 +1,6 @@
+<div ng-controller="addGroupCtrl as addGroupCtrl" class="{{item.className}}">
+        <label for="groupName">Group Name:</label>
+        <input type="text" name="groupName" id="groupName" ng-model="addGroupCtrl.groupName" value="">
+        <input type="button" name="saveGroup"
+               id="saveGroup" ng-click="addGroupCtrl.saveGroup()" value="Add Group" />
+</div>

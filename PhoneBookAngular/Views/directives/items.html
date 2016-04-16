@@ -1,0 +1,29 @@
+<div id="items-warp" ng-controller="ItemsCtrl as ItemsCtrl">
+    <ul>
+        <li class="no-hover" ng-if="ItemsCtrl.isRoot()">
+            <a href="javascript:void(0)" class="up" ng-click="ItemsCtrl.up()">
+            <img src="images/up.png"></a>
+        </li>
+        <li ng-repeat="item in ItemsCtrl.mainService.currentGroup.items track by $index" class="animate-on-load"
+            ng-class="{contact: !item.items  , group: item.items }">
+            <img src="images/typegroup.png" ng-show="item.items">
+            <img src="images/typecontact.png" ng-show="!item.items">
+            <span>{{item.name || item.firstName}}</span>
+            <A href="javascript:void(0)" class="del"
+               ng-click="ItemsCtrl.delItem($index)"><img src="images/del.png">
+            </A>
+            <A href="javascript:void(0)" ng-show="item.items" class="edit"
+               ng-click="ItemsCtrl.ShowGroup($index)"><img src="images/inside.png"></A>
+            <div class="contact-details" ng-show="!item.items">
+                <label class="fname">First Name: {{item.firstName}}</label>
+                <label class="lname">Last Name: {{item.lastName}}</label>
+                <div class="phones">
+                    <label class="phones">Phone Number:</label>
+                    <span class="phonenumber" ng-repeat="phonenumber in item.phoneNumbers track by $index"
+                          ng-class="{comma: !$last}">{{phonenumber}}</span>
+                </div>
+            </div>
+        </li>
+        <li ng-show="ItemsCtrl.mainService.currentGroup.items.length == 0">No Items To Display</li>
+    </ul>
+</div>

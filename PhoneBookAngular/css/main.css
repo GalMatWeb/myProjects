@@ -1,0 +1,372 @@
+/*
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,800,700italic,800italic);
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,800,700italic,800italic);
+
+body , html {
+    margin:0px;
+    padding:0px;
+    width:100%;
+    height:100%;
+}
+
+body {
+
+    font-family: 'Open Sans', serif;
+    font-size:15px;
+    color:#464646;
+    direction:ltr;
+    text-align:left;
+}
+
+img {
+    border:0px;
+}
+
+h1 {
+    position: relative;
+    display: block;
+    float: none;
+    clear: both;
+    width:100%;
+    padding-left:40px;
+}
+
+.warp {
+    position: relative;
+    display: block;
+    float: none;
+    clear: both;
+    width:100%;
+    max-width: 500px;
+    height:auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#blackout {
+    position: fixed;
+    display: block;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.8);
+    top:0px;
+    left:0px;
+    z-index:999;
+}
+
+
+
+#menu {
+    position: relative;
+    display: block;
+    float: none;
+    clear: both;
+    width:100%;
+    height:auto;
+    min-height:50px;
+}
+
+#menu ul {
+    position: relative;
+    display: block;
+    float: none;
+    clear: both;
+    height:50PX;
+    width:100%;
+    list-style-type: none;
+    margin:0px;
+    padding:0px 0px 7px 0px;
+    background: #c6c6c6;
+
+}
+
+#menu ul li {
+    position: relative;
+    display: block;
+    float: left;
+    padding:10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+}
+
+#menu ul li button {
+    position: relative;
+    display: block;
+    width:200px;
+    height:35px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background:url('../images/OnBtn_222x50.jpg');
+    border:1px solid #c6c6c6;
+    color:#FFF;
+    font-size: 1.2em;
+    margin-left:5px;
+}
+
+
+#tabs {
+    position: relative;
+    display: block;
+    float: left;
+    width:100%;
+    min-height:50px;
+}
+
+#tabs div.tab {
+    position: absolute;
+    display: block;
+    width:100%;
+    height:100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border:1px solid #000;
+    top:0px;
+    left:0px;
+}
+
+#tabs .group-holder {
+    position: fixed;
+    display: block;
+    width:350px;
+    height:200px;
+    top:50%;
+    left:50%;
+    margin-top:-175px;
+    margin-left:-100px;
+    background: #FFF;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding:20px;
+    z-index:1000;
+}
+
+#tabs .contact-holder {
+    position: fixed;
+    display: block;
+    width:350px;
+    min-height:300px;
+    top:50%;
+    left:50%;
+    margin-top:-150px;
+    margin-left:-175px;
+    background: #FFF;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding:20px;
+    z-index:1000;
+}
+
+#items-warp {
+    position: relative;
+    display: block;
+    float: none;
+    width:100%;
+    max-width: 580px;
+    height:auto;
+    background: #FFF;
+    color:#000;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+#items-warp ul {
+    list-style-type: none;
+    border-top:2px solid #FFF;
+}
+
+#items-warp ul li {
+    position: relative;
+    display: block;
+    float: left;
+    width:100%;
+    height:51px;
+    padding:5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color:#666666;
+    border:1px solid #666666;
+    margin-bottom:2px;
+}
+
+#items-warp ul li span {
+    position: relative;
+    display: block;
+    float: left;
+    padding-top:10px;
+    font-size:1.2em;
+}
+
+#items-warp ul li span:nth-child(2n-1) {
+    margin-left:46px;
+}
+
+#items-warp ul li img {
+    position:absolute;
+    display: block;
+    top:0px;
+    left:0px;
+    width:46px;
+}
+
+#items-warp ul li:hover {
+    background:url('../images/2.png');
+}
+
+#items-warp ul li.no-hover:hover {
+    background:#FFF;
+}
+
+#items-warp ul li.no-hover a.up-txt {
+    text-decoration: none;
+    float:left;
+    font-size:1em;
+    color:#444444;
+    font-weight: bold;
+    margin-top:5px;
+}
+
+#items-warp ul li.contact {
+    min-height: 51px;
+    height:auto;
+}
+
+#items-warp ul li.contact:hover {
+    background:url('../images/main.png');
+}
+
+#items-warp ul li.group {
+
+}
+
+
+
+.animate-on-load {
+    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 2s; /* Firefox < 16 */
+    -ms-animation: fadein 2s; /* Internet Explorer */
+    -o-animation: fadein 2s; /* Opera < 12.1 */
+    animation: fadein 2s;
+}
+
+
+#items-warp ul li a {
+    position: relative;
+    display: block;
+    float: right;
+    margin:0px 3px 0px 0px;
+}
+
+#items-warp ul li a.up {
+    float: left;
+}
+
+
+#items-warp ul li a img {
+    position: relative;
+    display: block;
+    width:auto;
+    top:auto;
+    left:auto;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.contact-details {
+    position: relative;
+    display: block;
+    float: left;
+    width:100%;
+    min-height:100px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding:20px;
+}
+
+.contact-details label.fname,
+.contact-details label.lname ,
+.contact-details label.phones {
+    position: absolute;
+    display: block;
+    width: auto;
+    min-width: 104px;
+    max-width:40%;
+    height:34px;
+    top:10px;
+    left:10%;
+    padding-top:0px;
+    font-size: 1em;
+    text-decoration: underline;
+}
+
+.contact-details label.lname {
+    left:50%;
+}
+
+.contact-details div.phones {
+    position: absolute;
+    display: block;
+    width:100%;
+    left:0px;
+    top:40px;
+    min-height:34px;
+}
+
+.contact-details div.phones label.phones {
+    position: relative;
+    display: block;
+    width:100%;
+    float:left;
+    height:34px;
+
+}
+
+#items-warp ul li .contact-details div.phones span.phonenumber  {
+    position: relative;
+    display: block;
+    float:left;
+    font-size: 1em;
+    text-decoration: underline;
+}
+
+
+.contact-details span.comma:after {
+    content: ',';
+}
