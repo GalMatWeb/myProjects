@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>ng-Phone Book App - Gal Matheys</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0,
+            maximum-scale=1.0, user-scalable=yes, initial-scale=1" />
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="css/inputs.css" rel="stylesheet" type="text/css">
+</head>
+<body ng-controller="BodyCtrl as bodyCtrl">
+    <div class="warp">
+        <menu></menu>
+        <h1>{{bodyCtrl.getCurrentGroupName()}}</h1>
+        <items></items>
+    </div>
+
+
+    <div id="blackout" ng-show="bodyCtrl.showBlackOut"
+         ng-click="bodyCtrl.hideAll()"
+    ></div>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="modules/Class.Group.js"></script>
+    <script src="modules/Class.Contact.js"></script>
+    <script src="modules/Class.Phonebookmain.js"></script>
+    <script src="app.js"></script>
+    <script src="Views/services/service.main.js"></script>
+    <script src="Views/services/service.alerts.js"></script>
+    <script src="Views/services/service.http.js"></script>
+    <script src="Views/services/service.SimpleUiService.js"></script>
+    <script src="Views/controllers/Ctrl.Body.js"></script>
+    <script src="Views/controllers/Ctrl.addContact.js"></script>
+    <script src="Views/controllers/Ctrl.addGroup.js"></script>
+    <script src="Views/controllers/Ctrl.menu.js"></script>
+    <script src="Views/controllers/Ctrl.Items.js"></script>
+    <script src="Views/directives/directive.items.js"></script>
+    <script src="Views/directives/directive.menu.js"></script>
+</body>
+</html>
