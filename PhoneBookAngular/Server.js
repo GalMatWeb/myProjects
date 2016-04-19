@@ -70,9 +70,11 @@ server = http.createServer(function(req,res){
                     if(loadData!=-1) {
                         fs.readFile(__dirname + "/Data/data.json", function (err, data) {
                             //if (err) return send404(res);
-                            newData = data;
-                            res.writeHead(200, { 'Content-Type': 'text/plain' });
-                            res.end(newData, 'utf-8');
+                            if(!err) {
+                                newData = data;
+                                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                                res.end(newData, 'utf-8');
+                            }
                         });
                     }
                     else {
